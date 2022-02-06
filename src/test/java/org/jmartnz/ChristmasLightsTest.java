@@ -1,16 +1,30 @@
 package org.jmartnz;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ChristmasLightsTest {
 
+    private ChristmasLights lights;
+
+    @BeforeEach
+    void setUp() {
+        lights = new ChristmasLights();
+    }
+
     @Test
     void turnOnAllLights() {
-        var lights = new ChristmasLights();
-        lights.turnOn(new Range(0, 0), new Range(999, 999));
+        lights.turnOn(Range.of(0, 0), Range.of(999, 999));
         assertEquals(1_000_000, lights.count());
+    }
+
+    @Test
+    void toggleFirstLine() {
+        lights.turnOn(Range.of(0, 0), Range.of(499, 0)); // turn first 500 lights on
+        lights.toggle(Range.of(0, 0), Range.of(999, 0));
+        assertEquals(500, lights.count());
     }
 
     private static class ChristmasLights {
@@ -36,7 +50,17 @@ public class ChristmasLightsTest {
                     if (grid[i][j]) total++;
             return total;
         }
+
+        public void toggle(Range start, Range end) {
+            for (var i = start.x; i <= end.x; i++)
+                for (var j = start.y; j <= end.y; j++)
+                    grid[i][j] = !grid[i][j];
+        }
     }
 
-    private record Range(int x, int y) {}
+    private record Range(int x, int y) {
+        public static Range of(int x, int y) {
+            return new Range(x, y);
+        }
+    }
 }
