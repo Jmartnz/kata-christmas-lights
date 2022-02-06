@@ -27,6 +27,13 @@ public class ChristmasLightsTest {
         assertEquals(500, lights.count());
     }
 
+    @Test
+    void turnOfMiddleFourLights() {
+        lights.turnOn(Range.of(0, 0), Range.of(999, 999)); // turn on all
+        lights.turnOff(Range.of(499, 499), Range.of(500, 500));
+        assertEquals(999_996, lights.count());
+    }
+
     private static class ChristmasLights {
 
         private final boolean[][] grid = new boolean[1000][1000];
@@ -55,6 +62,12 @@ public class ChristmasLightsTest {
             for (var i = start.x; i <= end.x; i++)
                 for (var j = start.y; j <= end.y; j++)
                     grid[i][j] = !grid[i][j];
+        }
+
+        public void turnOff(Range start, Range end) {
+            for (var i = start.x; i <= end.x; i++)
+                for (var j = start.y; j <= end.y; j++)
+                    grid[i][j] = false;
         }
     }
 
