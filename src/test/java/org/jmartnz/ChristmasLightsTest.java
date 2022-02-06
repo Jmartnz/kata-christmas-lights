@@ -34,6 +34,20 @@ public class ChristmasLightsTest {
         assertEquals(999_996, lights.count());
     }
 
+    @Test
+    void performSantasInstructions() {
+        lights.turnOn(Range.of(887, 9), Range.of(959, 629));
+        lights.turnOn(Range.of(454, 398), Range.of(844, 448));
+        lights.turnOff(Range.of(539, 243), Range.of(559, 965));
+        lights.turnOff(Range.of(370, 819), Range.of(676, 868));
+        lights.turnOff(Range.of(145, 40), Range.of(370, 997));
+        lights.turnOff(Range.of(301, 3), Range.of(808, 453));
+        lights.turnOn(Range.of(351, 678), Range.of(951, 908));
+        lights.toggle(Range.of(720, 196), Range.of(897, 994));
+        lights.toggle(Range.of(831, 394), Range.of(904, 860));
+        assertEquals(230_022, lights.count());
+    }
+
     private static class ChristmasLights {
 
         private final boolean[][] grid = new boolean[1000][1000];
