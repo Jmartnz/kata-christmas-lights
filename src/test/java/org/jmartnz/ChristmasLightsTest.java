@@ -48,6 +48,18 @@ public class ChristmasLightsTest {
         assertEquals(539_560, lights.count());
     }
 
+    @Test
+    void minimumBrightness() {
+        lights.turnOn(Range.of(0, 0), Range.of(0, 0));
+        assertEquals(1, lights.count());
+    }
+
+    @Test
+    void toggleAllLights() {
+        lights.toggle(Range.of(0, 0), Range.of(999, 999));
+        assertEquals(2_000_000, lights.count());
+    }
+
     private static class ChristmasLights {
 
         private final int[][] grid = new int[1000][1000];
