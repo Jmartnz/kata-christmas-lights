@@ -24,7 +24,7 @@ public class ChristmasLightsTest {
     void toggleFirstLine() {
         lights.turnOn(Range.of(0, 0), Range.of(499, 0)); // turn first 500 lights on
         lights.toggle(Range.of(0, 0), Range.of(999, 0));
-        assertEquals(500, lights.count());
+        assertEquals(2500, lights.count());
     }
 
     @Test
@@ -45,43 +45,43 @@ public class ChristmasLightsTest {
         lights.turnOn(Range.of(351, 678), Range.of(951, 908));
         lights.toggle(Range.of(720, 196), Range.of(897, 994));
         lights.toggle(Range.of(831, 394), Range.of(904, 860));
-        assertEquals(230_022, lights.count());
+        assertEquals(539_560, lights.count());
     }
 
     private static class ChristmasLights {
 
-        private final boolean[][] grid = new boolean[1000][1000];
+        private final int[][] grid = new int[1000][1000];
 
         public ChristmasLights() {
             for (var i = 0; i < grid.length; i++)
                 for (var j = 0; j < grid[0].length; j++)
-                    grid[i][j] = false;
+                    grid[i][j] = 0;
         }
 
         public void turnOn(Range start, Range end) {
             for (var i = start.x; i <= end.x; i++)
                 for (var j = start.y; j <= end.y; j++)
-                    grid[i][j] = true;
+                    grid[i][j]++;
         }
 
         public int count() {
             var total = 0;
             for (var i = 0; i < grid.length; i++)
                 for (var j = 0; j < grid[0].length; j++)
-                    if (grid[i][j]) total++;
+                    total += grid[i][j];
             return total;
         }
 
         public void toggle(Range start, Range end) {
             for (var i = start.x; i <= end.x; i++)
                 for (var j = start.y; j <= end.y; j++)
-                    grid[i][j] = !grid[i][j];
+                    grid[i][j] += 2;
         }
 
         public void turnOff(Range start, Range end) {
             for (var i = start.x; i <= end.x; i++)
                 for (var j = start.y; j <= end.y; j++)
-                    grid[i][j] = false;
+                    if (grid[i][j] > 0) grid[i][j]--;
         }
     }
 
